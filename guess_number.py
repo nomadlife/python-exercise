@@ -1,17 +1,14 @@
 import random
+number = random.randint(1,999)
+found = False
 
-print("Guess a number between 1 and 100.")
-number=random.randint(1,100)
-found_boolean = False               # flag vaiable to see
-print(number)                       # if they guessed it
-
-while not found_boolean:
-    guess = eval(input("Your guess:"))
-    if number == guess :
+while not found:
+    guess = eval(input("input number :"))
+    if guess == number:
         print("You got it")
-        found_boolean = True
+        found = True
     elif guess > number:
         print("Guess lower!")
-    else :
+    else:
         print("Guess higher!")
 
