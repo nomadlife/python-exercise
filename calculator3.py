@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter import ttk
+
 class Calculator:
     calc_value = 0.0
     div_trigger = False
@@ -7,39 +8,30 @@ class Calculator:
     add_trigger = False
     sub_trigger = False
     answer_trigger = False
+    operators = '+-*/'
+    numbers = '1234567890'
 
     def key(self,value):
         print(value,"repr:",repr(value.char),"char:",value.char)
-        math_determinant = '+-*/'
-        number_determinant = '1234567890'
-        #print("\r")
+
         if repr(value.char) == "''":
             return
 
-        elif value.char in math_determinant:
+        elif value.char in self.operators:
             self.math_button_press(value.char)
-            print("returned", value.char)
 
-        elif value.char in number_determinant:
+        elif value.char in self.numbers:
             self.button_press(value.char)
-            print("returned", value.char)
 
-        # Enter key => "=" button
         elif repr(value.char) == "'\\r'":
             self.equal_button_press()
-            print("equal button pressed")
 
-        # ESC key => 'AC' button
         elif repr(value.char) == "'\\x1b'":
             self.button_press('AC')
-            print("AC button pressed")
 
-        # Backspace key => delete one digit.
         elif repr(value.char) == "'\\x08'":
             if not self.answer_trigger == True:
                 self.number_entry_delete_backspace()
-            print("Backspace key pressed.")
-
 
 
     def history_entry_insert(self, value):
@@ -66,7 +58,7 @@ class Calculator:
         self.number_entry.configure(state='normal')
         txt = self.entry_value.get()[:-1]
         self.number_entry.delete(0,"end")
-        self.number_entry_insert(txt)
+        self.number_entry.insert(txt)
         self.number_entry.configure(state='disabled')
 
     def symbol_entry_insert(self, value):
@@ -79,17 +71,25 @@ class Calculator:
         self.symbol_entry.delete(0,"end")
         self.symbol_entry.configure(state='disabled')
 
+    def math_trigger_false(self):
+        self.add_trigger = False
+        self.sub_trigger = False
+        self.mult_trigger = False
+        self.div_trigger = False
+
+    def is_triggered(self):
+        if self.add_trigger or self.sub_trigger or self.mult_trigger or self.div_trigger:
+            return True
+        else:
+            return False
+
     def button_press(self, value):
         if value == 'AC':
             self.number_entry_delete()
             self.symbol_entry_delete()
             self.history_entry_delete()
-            #self.log_value = ''
             self.calc_value = 0.0
-            self.add_trigger = False
-            self.sub_trigger = False
-            self.mult_trigger = False
-            self.div_trigger = False
+            self.math_trigger_false()
         else:
             if self.answer_trigger == True:
                 self.history_entry_delete()
@@ -109,13 +109,9 @@ class Calculator:
 
     def math_button_press(self,value):
         if self.isfloat(str(self.number_entry.get())):
-            if self.add_trigger or self.sub_trigger or self.mult_trigger or self.div_trigger:
-                print(self.add_trigger,self.sub_trigger,self.mult_trigger,self.div_trigger)
+            if self.is_triggered():
                 self.equal_button_press()
-            self.add_trigger = False
-            self.sub_trigger = False
-            self.mult_trigger = False
-            self.div_trigger = False
+            self.math_trigger_false()
 
             self.calc_value = float(self.entry_value.get())
 
@@ -140,11 +136,8 @@ class Calculator:
             self.number_entry_delete()
             self.symbol_entry_insert(value)
 
-        elif self.add_trigger or self.sub_trigger or self.mult_trigger or self.div_trigger:
-            self.add_trigger = False
-            self.sub_trigger = False
-            self.mult_trigger = False
-            self.div_trigger = False
+        elif self.is_triggered():
+            self.math_trigger_false()
             if value == "/":
                 print("/ pressed")
                 self.div_trigger = True
@@ -161,19 +154,16 @@ class Calculator:
             self.symbol_entry_insert(value)
 
     def equal_button_press(self):
-        if self.add_trigger or self.sub_trigger or self.mult_trigger or self.div_trigger:
+        if self.is_triggered():
             if self.add_trigger:
                 solution = self.calc_value + float(self.entry_value.get())
-                self.add_trigger = False
             elif self.sub_trigger:
                 solution = self.calc_value - float(self.entry_value.get())
-                self.sub_trigger = False
             elif self.mult_trigger :
                 solution = self.calc_value * float(self.entry_value.get())
-                self.mult_trigger = False
             else:
                 solution = self.calc_value / float(self.entry_value.get())
-                self.div_trigger = False
+            self.math_trigger_false()
 
             print(self.calc_value, " ", float(self.entry_value.get()), " ", solution)
 
@@ -193,7 +183,6 @@ class Calculator:
         self.entry_value = StringVar(root, value="")
         self.symbol_value = StringVar(root, value="")
         self.history_value = StringVar(root, value="")
-        #self.log_value = StringVar(root, value="")
 
         root.title("Calculator")
         root.geometry("630x250")
@@ -268,7 +257,6 @@ class Calculator:
         self.math_button_press('-')).grid(row=4,column=3)
 
         root.bind('<Key>',self.key)
-        #root.bind('<Escape>',self.button_press('AC'))
 
 root = Tk()
 

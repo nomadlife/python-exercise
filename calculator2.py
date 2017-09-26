@@ -9,18 +9,16 @@ class Calculator:
     answer_trigger = False
 
     def key(self,value):
-        print(value,"repr:",repr(value.char),"char:",value.char)
-        math_determinant = '+-*/'
-        number_determinant = '1234567890'
-        #print("\r")
+        operators = '+-*/'
+        numbers = '1234567890'
         if repr(value.char) == "''":
             return
 
-        elif value.char in math_determinant:
+        elif value.char in operators:
             self.math_button_press(value.char)
             print("returned", value.char)
 
-        elif value.char in number_determinant:
+        elif value.char in numbers:
             self.button_press(value.char)
             print("returned", value.char)
 
@@ -66,7 +64,7 @@ class Calculator:
         self.number_entry.configure(state='normal')
         txt = self.entry_value.get()[:-1]
         self.number_entry.delete(0,"end")
-        self.number_entry_insert(txt)
+        self.number_entry.insert(txt)
         self.number_entry.configure(state='disabled')
 
     def symbol_entry_insert(self, value):
@@ -84,7 +82,6 @@ class Calculator:
             self.number_entry_delete()
             self.symbol_entry_delete()
             self.history_entry_delete()
-            #self.log_value = ''
             self.calc_value = 0.0
             self.add_trigger = False
             self.sub_trigger = False
@@ -193,7 +190,6 @@ class Calculator:
         self.entry_value = StringVar(root, value="")
         self.symbol_value = StringVar(root, value="")
         self.history_value = StringVar(root, value="")
-        #self.log_value = StringVar(root, value="")
 
         root.title("Calculator")
         root.geometry("630x250")
@@ -268,7 +264,6 @@ class Calculator:
         self.math_button_press('-')).grid(row=4,column=3)
 
         root.bind('<Key>',self.key)
-        #root.bind('<Escape>',self.button_press('AC'))
 
 root = Tk()
 
