@@ -1,5 +1,12 @@
+import math
 import gym
-env = gym.make('CartPole-v0')
+from gym import spaces
+from gym.utils import seeding
+import numpy as np
+from gymtut_mtcar9 import MountainCarEnv
+
+env = MountainCarEnv()
+
 for i_episode in range(30):
     observation = env.reset()
     for t in range(100):

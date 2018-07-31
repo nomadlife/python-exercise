@@ -1,5 +1,5 @@
 import gym
-env = gym.make('CartPole-v0')
+env = gym.make('SpaceInvaders-v0')
 for i_episode in range(30):
     observation = env.reset()
     for t in range(100):

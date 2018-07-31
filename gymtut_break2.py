@@ -1,5 +1,5 @@
 import gym
-import universe
+#import universe
 env = gym.make('Breakout-v0')
 for i_episode in range(30):
     observation = env.reset()

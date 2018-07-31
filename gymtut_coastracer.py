@@ -1,5 +1,5 @@
 import gym
-import universe
+#import universe
 
 env = gym.make('flashgames.CoasterRacer-v0')
 observation_n = env.reset()
