@@ -1,6 +1,6 @@
 import gym
 env = gym.make('MountainCar-v0')
-for i_episode in range(30):
+for i_episode in range(300):
     observation = env.reset()
     for t in range(100):
         env.render()
