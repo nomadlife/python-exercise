@@ -9,10 +9,13 @@ observation = env.reset()
 
 while not done:
     env.render()
-    cnt == 1
+    cnt == 2
     action = env.action_space.sample()
     observation, reward, done, _ = env.step(action)
 
-    if done:
-        break
+    #if done:
+    #    break
 print('game lasted', cnt, ' moves')
+input("")
+env.close()
+
