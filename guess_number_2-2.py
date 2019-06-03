@@ -2,21 +2,19 @@
 
 import random
 number = str(random.randint(1,999)).zfill(3)
-found = False
-print('answer :', number)
+print(number)
 
-print('strike ball')
-while not found:
-    guess = input("input number :").zfill(3)
+while True:
+    guess = input('숫자를 입력하세요 :')
     if guess == number:
-        print("You got it")
-        found = True
-    else:
-        strike = 0
-        ball = 0
-        for i in range(3):
-            if guess[i] == number[i]:
-                strike += 1
-            elif guess[i] in number:
-                ball+=1
-        print("{:2d}{:5d}".format(strike,ball))
+        print('정답입니다')
+        break
+        
+    strike = 0
+    ball = 0
+    for i in range(3):
+        if guess[i] == number[i]:
+            strike += 1
+        elif guess[i] in number:
+            ball+=1
+    print(strike,ball)
