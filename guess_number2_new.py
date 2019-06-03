@@ -34,5 +34,5 @@ while True:
         for i in range(3):
             if guess[i] in answer:
                 ball += 1
-                answer[answer.find(guess[i])] = 'b'
+                answer[answer.index(guess[i])] = 'b'
         print(strike,ball)
