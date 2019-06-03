@@ -9,12 +9,17 @@ while True:
     if guess == number:
         print('정답입니다')
         break
-        
+
     strike = 0
     ball = 0
+    answer = list(number)
     for i in range(3):
-        if guess[i] == number[i]:
+        if guess[i] == answer[i]:
             strike += 1
-        elif guess[i] in number:
-            ball+=1
-    print(strike,ball)
+            answer[i] = 's'
+
+    for i in range(3):
+        if guess[i] in answer:
+            ball += 1
+            answer[number.find(guess[i])] = 'b'
+    print(strike,ball, answer)
