@@ -2,7 +2,7 @@
 import  cv2, dlib, sys
 import numpy as np
 
-cap = cv2.VideoCapture('../face_detect_sample.mp4')
+cap = cv2.VideoCapture('face_detect_sample.mp4')
 scaler = 0.3
 
 while True:

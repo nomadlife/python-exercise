@@ -4,11 +4,11 @@ import  cv2, dlib, sys
 import numpy as np
 
 detector = dlib.get_frontal_face_detector()
-predictor = dlib.shape_predictor('../shape_predictor_68_face_landmarks.dat')
+predictor = dlib.shape_predictor('../../shape_predictor_68_face_landmarks.dat')
 
-cap = cv2.VideoCapture('../face_detect_sample.mp4')
+cap = cv2.VideoCapture('face_detect_sample.mp4')
 scaler = 0.5
-overlay = cv2.imread('../face_detection_overlay_kakao_ryan.png')
+overlay = cv2.imread('face_detection_overlay_kakao_ryan_2.png', cv2.IMREAD_UNCHANGED)
 
 def overlay_transparent(background_img, img_to_overlay_t, x, y, overlay_size=None):
     bg_img = background_img.copy()
@@ -32,8 +32,8 @@ def overlay_transparent(background_img, img_to_overlay_t, x, y, overlay_size=Non
 
     bg_img[int(y-h/2):int(y+h/2), int(x-w/2):int(x+w/2)] = cv2.add(img1_bg, img2_fg)
 
-    # convert 4 channels to 4 channels
-    bg_img = cv2.cvtColor(bg_img, cv2.COLOR_BGR2BGRA)
+    # convert 4 channels to 3 channels
+    bg_img = cv2.cvtColor(bg_img, cv2.COLOR_BGRA2BGR)
 
     return bg_img
 
@@ -59,7 +59,8 @@ while True:
     top_left = np.min(shape_2d, axis=0)
     bottom_right = np.max(shape_2d, axis=0)
 
-    face_size = max(bottom_right - top_left)
+    # face_size = max(bottom_right - top_left)
+    face_size = int(max(bottom_right - top_left)*1.5)
     center_x, center_y = np.mean(shape_2d, axis=0).astype(np.int)
 
     result = overlay_transparent(ori, overlay, center_x, center_y, overlay_size=(face_size, face_size))
